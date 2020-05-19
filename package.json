@@ -21,10 +21,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kredenc6/setupWizarLocalServer.git"
+    "url": "git+https://github.com/kredenc6/setupWizarLocalServer2.git"
   },
   "bugs": {
-    "url": "https://github.com/kredenc6/setupWizarLocalServer/issues"
+    "url": "https://github.com/kredenc6/setupWizarLocalServer2/issues"
   },
-  "homepage": "https://github.com/kredenc6/setupWizarLocalServer#readme"
+  "homepage": "https://github.com/kredenc6/setupWizarLocalServer2#readme"
 }

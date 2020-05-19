@@ -35,13 +35,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 exports.__esModule = true;
-var express_1 = require("express");
-var promise_1 = require("simple-git/promise");
-var git = promise_1["default"]("./testRepo");
-// const status: StatusResult = await git.status();
+var express = require("express");
+var simplegit = require("simple-git/promise");
+var git = simplegit("./");
 var PORT = process.env.PORT || 5005;
-var app = express_1["default"]();
+var app = express();
 // app.listen(() => console.log(`Server listening on port: ${PORT}.`));
 function status() {
     return __awaiter(this, void 0, void 0, function () {
@@ -86,34 +92,64 @@ function add(fileNames) {
         });
     });
 }
-// status()                                      // status
-// .then(statusSummary => {
-//   console.log(statusSummary);
-//   if(statusSummary?.not_added.length) {
-//     add(statusSummary.not_added)              // add...
-//     .then((statusSummary) => {
-//       console.log(statusSummary);
-//     })
-//     .catch(err => console.log(err));
-//   }
-//   else if(statusSummary?.files.length) {             // ...or commit
-//     git.commit(`randomKey: ${randomKey()}`)
-//     .then(commitMessage => {
-//       console.log("commited");
-//       // console.log(commitMessage);
-//       git.push()                              // push
-//       .then(pushMessage => {
-//         console.log("pushed");
-//         // console.log(pushMessage);
-//       })
-//       .catch(err => console.log(err));
-//     })
-//     .catch(err => console.log(err));
-//   }
+function addAll(statusSummary) {
+    return __awaiter(this, void 0, void 0, function () {
+        var not_added, created, deleted, modified, renamed, allChanges, e_3;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (!statusSummary)
+                        return [2 /*return*/];
+                    not_added = statusSummary.not_added, created = statusSummary.created, deleted = statusSummary.deleted, modified = statusSummary.modified, renamed = statusSummary.renamed;
+                    allChanges = __spreadArrays(not_added, created, deleted, modified, renamed.map(function (renamedFile) { return renamedFile.to; }));
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, git.add(allChanges)];
+                case 2:
+                    _a.sent();
+                    return [3 /*break*/, 4];
+                case 3:
+                    e_3 = _a.sent();
+                    console.log(e_3);
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/, status()];
+            }
+        });
+    });
+}
+status() // status
+    .then(function (statusSummary) {
+    var _a;
+    console.log(statusSummary);
+    if ((_a = statusSummary) === null || _a === void 0 ? void 0 : _a.files.length) {
+        addAll(statusSummary) // add...
+            .then(function (statusSummary) {
+            console.log(statusSummary);
+        })["catch"](function (err) { return console.log(err); });
+    }
+    // else if(statusSummary?.files.length) {             // ...or commit
+    //   git.commit(`randomKey: ${randomKey()}`)
+    //   .then(commitMessage => {
+    //     console.log("commited");
+    //     // console.log(commitMessage);
+    //     git.push()                                  // push
+    //     .then(pushMessage => {
+    //       console.log("pushed");
+    //       // console.log(pushMessage);
+    //     })
+    //     .catch(err => console.log(err));
+    //   })
+    //   .catch(err => console.log(err));
+    // }
+})["catch"](function (err) { return console.log(err); });
+// git.commit(`randomkey: ${randomKey()}`)
+// .then(() => {
+//   status()
+//   .then(statusSummary => console.log(statusSummary))
+//   .catch(err => console.log(err));
 // })
 // .catch(err => console.log(err));
-status()
-    .then(function (statusSummary) { return console.log(statusSummary); })["catch"](function (err) { return console.log(err); });
 function randomKey() {
     return Math.random().toString();
 }
