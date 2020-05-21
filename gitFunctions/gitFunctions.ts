@@ -33,9 +33,12 @@ export async function gitFetch() {
 export async function gitMerge() {
   const mergeOptions = { "--commit": true };
   let mergeSummary = null;
-  await git.merge(mergeOptions)
-    .then(summary => mergeSummary = summary)
-    .catch(err => console.log(err));
+  
+  try {
+    mergeSummary = await git.merge(mergeOptions);
+  } catch(err) {
+    console.log(err.message);
+  }
   return mergeSummary;
 }
 

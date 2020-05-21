@@ -56,7 +56,6 @@ var PORT = process.env.PORT || 5005;
 var app = express();
 app.use(express.json());
 app.use("/verify", express.text());
-// app.use("/gitRepo/commit", express.json());
 app.use(function (_, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -135,13 +134,13 @@ app.post("/gitRepo/push", function (req, res) { return __awaiter(void 0, void 0,
     });
 }); });
 app.get("/gitRepo/merge", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var status;
+    var mergeSummary;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, gitFunctions_1.gitMerge()];
             case 1:
-                status = _a.sent();
-                res.json(status);
+                mergeSummary = _a.sent();
+                res.json(mergeSummary);
                 return [2 /*return*/];
         }
     });
@@ -176,21 +175,6 @@ app.get("/jsonFiles", function (req, res) { return __awaiter(void 0, void 0, voi
 }); });
 app.get("/", function (req, res) { return res.send("We're back baby!"); });
 app.listen(PORT, function () { return console.log("Server listening on port: " + PORT + "."); });
-// git.commit(`randomkey: ${randomKey()}`)
-// .then(() => {
-//   status()
-//   .then(statusSummary => console.log(statusSummary))
-//   .catch(err => console.log(err));
-// })
-// .catch(err => console.log(err));
-function randomKey() {
-    return Math.random().toString();
-}
-// function areAllChangesStaged(statusSummary: simplegit.StatusResult) {
-//   console.log("checkig staged");
-//   console.log(statusSummary.files.length === statusSummary.staged.length - statusSummary.conflicted.length);
-//   return statusSummary.files.length === statusSummary.staged.length - statusSummary.conflicted.length;
-// }
 function getJsonFileNames(path) {
     var e_1, _a;
     return __awaiter(this, void 0, void 0, function () {

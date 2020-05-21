@@ -14,7 +14,6 @@ const PORT = process.env.PORT || 5005;
 const app = express();
 app.use(express.json());
 app.use("/verify", express.text());
-// app.use("/gitRepo/commit", express.json());
 app.use((_, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -66,8 +65,8 @@ app.post("/gitRepo/push", async (req, res) => {
 });
 
 app.get("/gitRepo/merge", async (req, res) => {
-  const status = await gitMerge();
-  res.json(status);
+  const mergeSummary = await gitMerge();
+  res.json(mergeSummary);
 });
 
 app.get("/jsonFileNames", async (req, res) => {
@@ -82,25 +81,6 @@ app.get("/jsonFiles", async (req, res) => {
 app.get("/", (req, res) => res.send("We're back baby!"));
 
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT}.`));
-
-
-// git.commit(`randomkey: ${randomKey()}`)
-// .then(() => {
-//   status()
-//   .then(statusSummary => console.log(statusSummary))
-//   .catch(err => console.log(err));
-// })
-// .catch(err => console.log(err));
-
-function randomKey() {
-  return Math.random().toString();
-}
-
-// function areAllChangesStaged(statusSummary: simplegit.StatusResult) {
-//   console.log("checkig staged");
-//   console.log(statusSummary.files.length === statusSummary.staged.length - statusSummary.conflicted.length);
-//   return statusSummary.files.length === statusSummary.staged.length - statusSummary.conflicted.length;
-// }
 
 async function getJsonFileNames(path: string) {
   const jsonFileNames = [];

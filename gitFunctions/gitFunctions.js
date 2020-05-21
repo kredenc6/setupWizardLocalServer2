@@ -78,17 +78,24 @@ function gitFetch() {
 exports.gitFetch = gitFetch;
 function gitMerge() {
     return __awaiter(this, void 0, void 0, function () {
-        var mergeOptions, mergeSummary;
+        var mergeOptions, mergeSummary, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     mergeOptions = { "--commit": true };
                     mergeSummary = null;
-                    return [4 /*yield*/, server_1.git.merge(mergeOptions)
-                            .then(function (summary) { return mergeSummary = summary; })["catch"](function (err) { return console.log(err); })];
+                    _a.label = 1;
                 case 1:
-                    _a.sent();
-                    return [2 /*return*/, mergeSummary];
+                    _a.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, server_1.git.merge(mergeOptions)];
+                case 2:
+                    mergeSummary = _a.sent();
+                    return [3 /*break*/, 4];
+                case 3:
+                    err_1 = _a.sent();
+                    console.log(err_1.message);
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/, mergeSummary];
             }
         });
     });
