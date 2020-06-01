@@ -49,8 +49,10 @@ var axios_1 = require("axios");
 var fs = require("fs");
 var gitFunctions_1 = require("./gitFunctions/gitFunctions");
 var filesInWritingProgress = [];
-var REPO_DIR_NAME = "testRepo";
+// const REPO_DIR_NAME = "testRepo";
+var REPO_DIR_NAME = "resources_guru_config_json_files";
 var GIT_REPO_PATH = "./" + REPO_DIR_NAME;
+var JSON_FILES_PATH = GIT_REPO_PATH + "/UnpublishedApps";
 exports.git = simplegit(GIT_REPO_PATH);
 var PORT = process.env.PORT || 5005;
 var app = express();
@@ -75,7 +77,7 @@ app.post("/verify", function (req, res) {
 // *********************
 app.post("/saveJson", function (req, res, next) {
     var file = req.body;
-    saveJsonFile(GIT_REPO_PATH + "/" + file.name, JSON.stringify(file.data, null, 2))
+    saveJsonFile(JSON_FILES_PATH + "/" + file.name, JSON.stringify(file.data, null, 2))
         .then(function (success) { return res.json({ fileName: file.name, savedSuccessfully: success }); });
 });
 app.get("/gitRepo/status", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -101,22 +103,22 @@ app.get("/gitRepo/status", function (req, res) { return __awaiter(void 0, void 0
     });
 }); });
 app.post("/gitRepo/commit", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var filesToAdd, commitMessage, addedFilesCount, commitSummary;
+    var filesToCommit, commitMessage, commitedFilesCount, commitSummary;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                filesToAdd = req.body.files;
+                filesToCommit = req.body.files;
                 commitMessage = req.body.message;
-                addedFilesCount = 0;
-                if (!filesToAdd.length) return [3 /*break*/, 2];
-                return [4 /*yield*/, gitFunctions_1.gitAdd(filesToAdd)];
+                commitedFilesCount = 0;
+                if (!filesToCommit.length) return [3 /*break*/, 2];
+                return [4 /*yield*/, gitFunctions_1.gitAdd(filesToCommit)];
             case 1:
-                addedFilesCount = _a.sent();
+                commitedFilesCount = _a.sent();
                 _a.label = 2;
             case 2: return [4 /*yield*/, gitFunctions_1.gitCommit(commitMessage)];
             case 3:
                 commitSummary = _a.sent();
-                res.json({ addedFilesCount: addedFilesCount, commitSummary: commitSummary });
+                res.json({ commitedFilesCount: commitedFilesCount, commitSummary: commitSummary });
                 return [2 /*return*/];
         }
     });
@@ -151,7 +153,7 @@ app.get("/jsonFileNames", function (req, res) { return __awaiter(void 0, void 0,
         switch (_c.label) {
             case 0:
                 _b = (_a = res).json;
-                return [4 /*yield*/, getJsonFileNames(GIT_REPO_PATH)];
+                return [4 /*yield*/, getJsonFileNames(JSON_FILES_PATH)];
             case 1:
                 _b.apply(_a, [_c.sent()]);
                 return [2 /*return*/];
@@ -162,11 +164,11 @@ app.get("/jsonFiles", function (req, res) { return __awaiter(void 0, void 0, voi
     var fileNames, _a, _b;
     return __generator(this, function (_c) {
         switch (_c.label) {
-            case 0: return [4 /*yield*/, getJsonFileNames(GIT_REPO_PATH)];
+            case 0: return [4 /*yield*/, getJsonFileNames(JSON_FILES_PATH)];
             case 1:
                 fileNames = _c.sent();
                 _b = (_a = res).json;
-                return [4 /*yield*/, getJsonFiles(GIT_REPO_PATH, fileNames.map(function (fileName) { return "/" + fileName + ".json"; }))];
+                return [4 /*yield*/, getJsonFiles(JSON_FILES_PATH, fileNames.map(function (fileName) { return "/" + fileName + ".json"; }))];
             case 2:
                 _b.apply(_a, [_c.sent()]);
                 return [2 /*return*/];

@@ -5,8 +5,10 @@ import * as fs from "fs";
 import { gitAdd, gitCommit, gitFetch, gitMerge, gitPush, gitStatus } from "./gitFunctions/gitFunctions";
 
 const filesInWritingProgress: string[] = [];
-const REPO_DIR_NAME = "testRepo";
+// const REPO_DIR_NAME = "testRepo";
+const REPO_DIR_NAME = "resources_guru_config_json_files";
 const GIT_REPO_PATH = `./${REPO_DIR_NAME}`;
+const JSON_FILES_PATH = `${GIT_REPO_PATH}/UnpublishedApps`;
  
 export const git = simplegit(GIT_REPO_PATH);
 
@@ -37,7 +39,7 @@ app.post("/verify", (req, res) => {
 
 app.post("/saveJson", (req, res, next) => {
   const file = req.body;
-  saveJsonFile(`${GIT_REPO_PATH}/${file.name}`, JSON.stringify(file.data, null, 2))
+  saveJsonFile(`${JSON_FILES_PATH}/${file.name}`, JSON.stringify(file.data, null, 2))
     .then(success => res.json({ fileName: file.name, savedSuccessfully: success }));
 });
 
@@ -48,15 +50,14 @@ app.get("/gitRepo/status", async (req, res) => {
 });
 
 app.post("/gitRepo/commit", async (req, res) => {
-  const filesToAdd = req.body.files as string[];
+  const filesToCommit = req.body.files as string[];
   const commitMessage = req.body.message as string;
-  let addedFilesCount = 0;
-  if(filesToAdd.length) {
-    addedFilesCount = await gitAdd(filesToAdd);
+  let commitedFilesCount = 0;
+  if(filesToCommit.length) {
+    commitedFilesCount = await gitAdd(filesToCommit);
   }
   const commitSummary = await gitCommit(commitMessage);
-
-  res.json({ addedFilesCount, commitSummary });
+  res.json({ commitedFilesCount, commitSummary });
 });
 
 app.post("/gitRepo/push", async (req, res) => {
@@ -70,12 +71,12 @@ app.get("/gitRepo/merge", async (req, res) => {
 });
 
 app.get("/jsonFileNames", async (req, res) => {
-  res.json(await getJsonFileNames(GIT_REPO_PATH));
+  res.json(await getJsonFileNames(JSON_FILES_PATH));
 });
 
 app.get("/jsonFiles", async (req, res) => {
-  const fileNames = await getJsonFileNames(GIT_REPO_PATH);
-  res.json( await getJsonFiles(GIT_REPO_PATH, fileNames.map(fileName => `/${fileName}.json`)));
+  const fileNames = await getJsonFileNames(JSON_FILES_PATH);
+  res.json( await getJsonFiles(JSON_FILES_PATH, fileNames.map(fileName => `/${fileName}.json`)));
 });
 
 app.get("/", (req, res) => res.send("We're back baby!"));
