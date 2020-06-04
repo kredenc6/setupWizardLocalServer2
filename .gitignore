@@ -1,5 +1,4 @@
-/testRepo
-/resources_guru_config_json_files
+/jsonRepos
 /node_modules
 npm-debug.log
 .DS_Store

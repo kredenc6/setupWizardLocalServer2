@@ -36,16 +36,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var server_1 = require("../server");
-;
-function gitAdd(files) {
+var simplegit = require("simple-git/promise");
+function gitAdd(git, files) {
     return __awaiter(this, void 0, void 0, function () {
         var e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, server_1.git.add(files)];
+                    return [4 /*yield*/, git.add(files)];
                 case 1:
                     _a.sent();
                     return [3 /*break*/, 3];
@@ -59,14 +58,34 @@ function gitAdd(files) {
     });
 }
 exports.gitAdd = gitAdd;
-function gitFetch() {
+function gitClone(remoteRepo, localPath) {
+    return __awaiter(this, void 0, void 0, function () {
+        var cloneSuccessful;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    cloneSuccessful = false;
+                    return [4 /*yield*/, simplegit().clone(remoteRepo, localPath)
+                            .then(function (cloneStatus) {
+                            console.log(cloneStatus);
+                            cloneSuccessful = true;
+                        })["catch"](function (err) { return console.log(err); })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/, cloneSuccessful];
+            }
+        });
+    });
+}
+exports.gitClone = gitClone;
+function gitFetch(git) {
     return __awaiter(this, void 0, void 0, function () {
         var fetchSuccessful;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     fetchSuccessful = false;
-                    return [4 /*yield*/, server_1.git.fetch()
+                    return [4 /*yield*/, git.fetch()
                             .then(function () { return fetchSuccessful = true; })["catch"](function (err) { return console.log(err); })];
                 case 1:
                     _a.sent();
@@ -76,7 +95,7 @@ function gitFetch() {
     });
 }
 exports.gitFetch = gitFetch;
-function gitMerge() {
+function gitMerge(git) {
     return __awaiter(this, void 0, void 0, function () {
         var mergeOptions, mergeSummary, err_1;
         return __generator(this, function (_a) {
@@ -87,7 +106,7 @@ function gitMerge() {
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, server_1.git.merge(mergeOptions)];
+                    return [4 /*yield*/, git.merge(mergeOptions)];
                 case 2:
                     mergeSummary = _a.sent();
                     return [3 /*break*/, 4];
@@ -101,7 +120,7 @@ function gitMerge() {
     });
 }
 exports.gitMerge = gitMerge;
-function gitCommit(commitMsg) {
+function gitCommit(git, commitMsg) {
     return __awaiter(this, void 0, void 0, function () {
         var commitSummary, e_2;
         return __generator(this, function (_a) {
@@ -111,7 +130,7 @@ function gitCommit(commitMsg) {
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, server_1.git.commit(commitMsg)];
+                    return [4 /*yield*/, git.commit(commitMsg)];
                 case 2:
                     commitSummary = _a.sent();
                     return [3 /*break*/, 4];
@@ -125,7 +144,7 @@ function gitCommit(commitMsg) {
     });
 }
 exports.gitCommit = gitCommit;
-function gitPull() {
+function gitPull(git) {
     return __awaiter(this, void 0, void 0, function () {
         var pullSuccesfull, pullResponse, e_3;
         return __generator(this, function (_a) {
@@ -135,7 +154,7 @@ function gitPull() {
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, server_1.git.pull()];
+                    return [4 /*yield*/, git.pull()];
                 case 2:
                     pullResponse = _a.sent();
                     pullSuccesfull = true;
@@ -150,7 +169,7 @@ function gitPull() {
     });
 }
 exports.gitPull = gitPull;
-function gitPush() {
+function gitPush(git) {
     return __awaiter(this, void 0, void 0, function () {
         var pushSuccesfull, e_4;
         return __generator(this, function (_a) {
@@ -160,7 +179,7 @@ function gitPush() {
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, server_1.git.push()];
+                    return [4 /*yield*/, git.push()];
                 case 2:
                     _a.sent();
                     pushSuccesfull = true;
@@ -175,7 +194,7 @@ function gitPush() {
     });
 }
 exports.gitPush = gitPush;
-function gitStatus() {
+function gitStatus(git) {
     return __awaiter(this, void 0, void 0, function () {
         var statusSummary, e_5;
         return __generator(this, function (_a) {
@@ -185,7 +204,7 @@ function gitStatus() {
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, server_1.git.status()];
+                    return [4 /*yield*/, git.status()];
                 case 2:
                     statusSummary = _a.sent();
                     return [3 /*break*/, 4];
@@ -199,54 +218,3 @@ function gitStatus() {
     });
 }
 exports.gitStatus = gitStatus;
-// export async function pull_add_commit_push_all(commitMsg: string) {
-//   const summary: Summary = {
-//     upToDateWithRemoteRepo: null,
-//     pulledFromRemoteToSync: false,
-//     startStatusSummary: null,
-//     addedFiles: 0,
-//     commitSummary: null,
-//     pushSuccessful: false
-//   };
-//   summary.upToDateWithRemoteRepo = await isLocalRepoUpToDate(); // check if repo is up to date
-//   if(summary.upToDateWithRemoteRepo === null) {
-//     console.warn("Did not managed to get remote repo status. Exiting the function.");
-//     return summary;
-//   }
-//   if(!summary.upToDateWithRemoteRepo) {
-//     console.log("Local repo is out of date.");
-//     const pullQuery = await queryRepoPull();  // ask user if he wants to update
-//     if(pullQuery) {
-//       summary.pulledFromRemoteToSync = await pull();
-//       if(!summary.pulledFromRemoteToSync) {
-//         console.warn("Pull fail. Exiting the function.");
-//         return summary;
-//       }
-//     } else {
-//       console.warn("Pull denied by user. Exiting the function.");
-//       return summary;
-//     }
-//   }
-//   summary.startStatusSummary = await status();
-//   if(!summary.startStatusSummary) {
-//     console.warn("Did not manage to get git status summary. Exiting the function.");
-//     return summary;
-//   }
-//   summary.addedFiles = await addAll(summary.startStatusSummary.files);
-//   if(summary.addedFiles === -1) {
-//     console.warn("Add files failure. Exiting the function.");
-//     return summary;
-//   }
-//   summary.commitSummary = await commit(commitMsg);
-//   if(!summary.commitSummary) {
-//     console.warn("Did not manage to commit files. Exiting the function.");
-//     return summary;
-//   }
-//   summary.pushSuccessful = await push();
-//   if(!summary.pushSuccessful) {
-//     console.warn("Failed to push files. Exiting the function.");
-//     return summary
-//   }
-//   console.log("Full repo update succefull!");
-//   return summary;
-// }
