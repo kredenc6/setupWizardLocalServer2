@@ -6,10 +6,15 @@ import { gitAdd, gitCommit, gitFetch, gitMerge, gitPush, gitStatus } from "./git
 import gitSetup from "./git/gitSetup";
 
 const filesInWritingProgress: string[] = [];
-const REMOTE_REPO = "https://www.github.com/norakomi/resources_guru_config_json_files.git";
-const REPO_DIR_NAME = "resources_guru_config_json_files";
+// const REMOTE_REPO = "https://www.github.com/norakomi/resources_guru_config_json_files.git";
+// const REPO_DIR_NAME = "resources_guru_config_json_files";
+// export const GIT_REPO_PATH = `./jsonRepos/${REPO_DIR_NAME}`;
+// const JSON_FILES_PATH = `${GIT_REPO_PATH}/UnpublishedApps`;
+
+const REMOTE_REPO = "https://github.com/norakomi/Circle-CI-Android-test-app.git";
+const REPO_DIR_NAME = "Circle-CI-Android-test-app.git";
 export const GIT_REPO_PATH = `./jsonRepos/${REPO_DIR_NAME}`;
-const JSON_FILES_PATH = `${GIT_REPO_PATH}/UnpublishedApps`;
+const JSON_FILES_PATH = `${GIT_REPO_PATH}/unpublishedJsons`;
 
 // const REMOTE_REPO = "https://www.github.com/kredenc6/testRepo.git";
 // const REPO_DIR_NAME = "testRepo";
