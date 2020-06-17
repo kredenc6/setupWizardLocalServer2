@@ -11,15 +11,15 @@ const filesInWritingProgress: string[] = [];
 // export const GIT_REPO_PATH = `./jsonRepos/${REPO_DIR_NAME}`;
 // const JSON_FILES_PATH = `${GIT_REPO_PATH}/UnpublishedApps`;
 
-const REMOTE_REPO = "https://github.com/norakomi/Circle-CI-Android-test-app.git";
-const REPO_DIR_NAME = "Circle-CI-Android-test-app.git";
-export const GIT_REPO_PATH = `./jsonRepos/${REPO_DIR_NAME}`;
-const JSON_FILES_PATH = `${GIT_REPO_PATH}/unpublishedJsons`;
-
-// const REMOTE_REPO = "https://www.github.com/kredenc6/testRepo.git";
-// const REPO_DIR_NAME = "testRepo";
+// const REMOTE_REPO = "https://github.com/norakomi/Circle-CI-Android-test-app.git";
+// const REPO_DIR_NAME = "Circle-CI-Android-test-app";
 // export const GIT_REPO_PATH = `./jsonRepos/${REPO_DIR_NAME}`;
-// const JSON_FILES_PATH = `${GIT_REPO_PATH}`;
+// const JSON_FILES_PATH = `${GIT_REPO_PATH}/unpublishedJsons`;
+
+const REMOTE_REPO = "https://www.github.com/kredenc6/testRepo.git";
+const REPO_DIR_NAME = "testRepo";
+export const GIT_REPO_PATH = `./jsonRepos/${REPO_DIR_NAME}`;
+const JSON_FILES_PATH = `${GIT_REPO_PATH}/unpublished`;
 
 server();
 
