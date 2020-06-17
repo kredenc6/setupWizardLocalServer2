@@ -146,24 +146,23 @@ function gitCommit(git, commitMsg) {
 exports.gitCommit = gitCommit;
 function gitPull(git) {
     return __awaiter(this, void 0, void 0, function () {
-        var pullSuccesfull, pullResponse, e_3;
+        var pullSummary, e_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    pullSuccesfull = false;
+                    pullSummary = null;
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
                     return [4 /*yield*/, git.pull()];
                 case 2:
-                    pullResponse = _a.sent();
-                    pullSuccesfull = true;
+                    pullSummary = _a.sent();
                     return [3 /*break*/, 4];
                 case 3:
                     e_3 = _a.sent();
                     console.log(e_3);
                     return [3 /*break*/, 4];
-                case 4: return [2 /*return*/, pullSuccesfull];
+                case 4: return [2 /*return*/, pullSummary];
             }
         });
     });

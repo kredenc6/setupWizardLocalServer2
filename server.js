@@ -54,14 +54,14 @@ var filesInWritingProgress = [];
 // const REPO_DIR_NAME = "resources_guru_config_json_files";
 // export const GIT_REPO_PATH = `./jsonRepos/${REPO_DIR_NAME}`;
 // const JSON_FILES_PATH = `${GIT_REPO_PATH}/UnpublishedApps`;
-// const REMOTE_REPO = "https://github.com/norakomi/Circle-CI-Android-test-app.git";
-// const REPO_DIR_NAME = "Circle-CI-Android-test-app";
+var REMOTE_REPO = "https://github.com/norakomi/Circle-CI-Android-test-app.git";
+var REPO_DIR_NAME = "Circle-CI-Android-test-app";
+exports.GIT_REPO_PATH = "./jsonRepos/" + REPO_DIR_NAME;
+var JSON_FILES_PATH = exports.GIT_REPO_PATH + "/unpublishedJsons";
+// const REMOTE_REPO = "https://www.github.com/kredenc6/testRepo.git";
+// const REPO_DIR_NAME = "testRepo";
 // export const GIT_REPO_PATH = `./jsonRepos/${REPO_DIR_NAME}`;
 // const JSON_FILES_PATH = `${GIT_REPO_PATH}/unpublishedJsons`;
-var REMOTE_REPO = "https://www.github.com/kredenc6/testRepo.git";
-var REPO_DIR_NAME = "testRepo";
-exports.GIT_REPO_PATH = "./jsonRepos/" + REPO_DIR_NAME;
-var JSON_FILES_PATH = exports.GIT_REPO_PATH + "/unpublished";
 server();
 function server() {
     return __awaiter(this, void 0, void 0, function () {
@@ -296,6 +296,18 @@ function server() {
                                 case 1:
                                     mergeSummary = _a.sent();
                                     res.json(mergeSummary);
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); });
+                    app.get("/gitRepo/pull", function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+                        var pullSummary;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0: return [4 /*yield*/, gitFunctions_1.gitPull(git)];
+                                case 1:
+                                    pullSummary = _a.sent();
+                                    res.json(pullSummary);
                                     return [2 /*return*/];
                             }
                         });

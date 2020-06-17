@@ -2,7 +2,7 @@ import * as express from "express";
 import axios from "axios";
 import * as fs from "fs";
 import * as simplegit from "simple-git/promise";
-import { gitAdd, gitCommit, gitFetch, gitMerge, gitPush, gitStatus } from "./git/gitFunctions";
+import { gitAdd, gitCommit, gitFetch, gitMerge, gitPull, gitPush, gitStatus } from "./git/gitFunctions";
 import gitSetup from "./git/gitSetup";
 
 const filesInWritingProgress: string[] = [];
@@ -11,15 +11,15 @@ const filesInWritingProgress: string[] = [];
 // export const GIT_REPO_PATH = `./jsonRepos/${REPO_DIR_NAME}`;
 // const JSON_FILES_PATH = `${GIT_REPO_PATH}/UnpublishedApps`;
 
-// const REMOTE_REPO = "https://github.com/norakomi/Circle-CI-Android-test-app.git";
-// const REPO_DIR_NAME = "Circle-CI-Android-test-app";
+const REMOTE_REPO = "https://github.com/norakomi/Circle-CI-Android-test-app.git";
+const REPO_DIR_NAME = "Circle-CI-Android-test-app";
+export const GIT_REPO_PATH = `./jsonRepos/${REPO_DIR_NAME}`;
+const JSON_FILES_PATH = `${GIT_REPO_PATH}/unpublishedJsons`;
+
+// const REMOTE_REPO = "https://www.github.com/kredenc6/testRepo.git";
+// const REPO_DIR_NAME = "testRepo";
 // export const GIT_REPO_PATH = `./jsonRepos/${REPO_DIR_NAME}`;
 // const JSON_FILES_PATH = `${GIT_REPO_PATH}/unpublishedJsons`;
-
-const REMOTE_REPO = "https://www.github.com/kredenc6/testRepo.git";
-const REPO_DIR_NAME = "testRepo";
-export const GIT_REPO_PATH = `./jsonRepos/${REPO_DIR_NAME}`;
-const JSON_FILES_PATH = `${GIT_REPO_PATH}/unpublished`;
 
 server();
 
@@ -98,6 +98,11 @@ async function server() {
   app.get("/gitRepo/merge", async (req, res) => {
     const mergeSummary = await gitMerge(git);
     res.json(mergeSummary);
+  });
+
+  app.get("/gitRepo/pull", async (req, res) => {
+    const pullSummary = await gitPull(git);
+    res.json(pullSummary);
   });
   
   // *********************

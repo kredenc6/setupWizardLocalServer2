@@ -56,15 +56,14 @@ export async function gitCommit(git: SimpleGit, commitMsg: string) {
 }
 
 export async function gitPull(git: SimpleGit) {
-  let pullSuccesfull = false;
+  let pullSummary = null;
   try {
-    const pullResponse = await git.pull();
-    pullSuccesfull = true;
+    pullSummary = await git.pull();
   }
   catch (e) {
     console.log(e);
   }
-  return pullSuccesfull;
+  return pullSummary;
 }
 
 export async function gitPush(git: SimpleGit) {
